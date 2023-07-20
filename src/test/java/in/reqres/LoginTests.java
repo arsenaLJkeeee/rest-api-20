@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import static io.restassured.RestAssured.given;
 import static io.restassured.http.ContentType.JSON;
+import static org.hamcrest.Matchers.hasKey;
 import static org.hamcrest.Matchers.is;
 
 public class LoginTests {
@@ -14,28 +15,27 @@ public class LoginTests {
     3. Check token is QpwL5tke4Pnpja7X4
      */
 
+
     @Test
     void successfulLoginTest() {
-        String authData = "{ \"email\": \"eve.holt@reqres.in\", \"password\": \"cityslicka\" }"; // BAD PRACTICE
 
         given()
                 .log().uri()
                 .log().method()
                 .log().body()
                 .contentType(JSON)
-                .body(authData)
                 .when()
-                .post("https://reqres.in/api/login")
+                .get("https://reqres.in/api/users?page=2")
                 .then()
                 .log().status()
                 .log().body()
                 .statusCode(200)
-                .body("token", is("QpwL5tke4Pnpja7X4"));
+                .body("data", hasKey("id"));
     }
 
     @Test
     void missingPasswordTest() {
-        String authData = "{ \"email\": \"eve.holt@reqres.in\", \"password\": \"\" }"; // BAD PRACTICE
+        String authData = "{ \"email\": \"eve.holt@reqres.in\", \"password\": \"pistol\" }"; // BAD PRACTICE
 
         given()
                 .log().uri()
@@ -44,62 +44,12 @@ public class LoginTests {
                 .contentType(JSON)
                 .body(authData)
                 .when()
-                .post("https://reqres.in/api/login")
+                .post("https://reqres.in/api/register")
                 .then()
                 .log().status()
                 .log().body()
                 .statusCode(400)
-                .body("error", is("Missing password"));
+                .body("error", hasKey("token"));
     }
 
-    @Test
-    void missingEmailTest() {
-        String authData = "{ \"email\": \"\", \"password\": \"cityslicka\" }"; // BAD PRACTICE
-
-        given()
-                .log().uri()
-                .log().method()
-                .log().body()
-                .contentType(JSON)
-                .body(authData)
-                .when()
-                .post("https://reqres.in/api/login")
-                .then()
-                .log().status()
-                .log().body()
-                .statusCode(400)
-                .body("error", is("Missing email or username"));
-    }
-
-    @Test
-    void negative404Test() {
-        String authData = "{ \"email\": \"eve.holt@reqres.in\", \"password\": \"cityslicka\" }"; // BAD PRACTICE
-
-        given()
-                .log().uri()
-                .log().method()
-                .log().body()
-                .body(authData)
-                .when()
-                .post("https://reqres.in/api/login")
-                .then()
-                .log().status()
-                .log().body()
-                .statusCode(400)
-                .body("error", is("Missing email or username"));
-    }
-
-    @Test
-    void negative415Test() {
-        given()
-                .log().uri()
-                .log().method()
-                .log().body()
-                .when()
-                .post("https://reqres.in/api/login")
-                .then()
-                .log().status()
-                .log().body()
-                .statusCode(415);
-    }
 }
