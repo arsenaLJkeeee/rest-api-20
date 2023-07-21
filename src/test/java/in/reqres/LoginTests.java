@@ -8,7 +8,6 @@ import static org.hamcrest.Matchers.*;
 
 public class LoginTests {
 
-
     @Test
     void successfulGetListOfUsers() {
 
@@ -28,7 +27,7 @@ public class LoginTests {
 
     @Test
     void successfulGetTokenAfterRegistration() {
-        String authData = "{ \"email\": \"eve.holt@reqres.in\", \"password\": \"pistol\" }"; // BAD PRACTICE
+        String authData = "{ \"email\": \"eve.holt@reqres.in\", \"password\": \"pistol\" }";
 
         given()
                 .log().uri()
@@ -47,7 +46,7 @@ public class LoginTests {
 
     @Test
     void successfulCreatingOfUser() {
-        String authData = "{ \"name\": \"morpheus\", \"job\": \"leader\" }"; // BAD PRACTICE
+        String authData = "{ \"name\": \"morpheus\", \"job\": \"leader\" }";
 
         given()
                 .log().uri()
