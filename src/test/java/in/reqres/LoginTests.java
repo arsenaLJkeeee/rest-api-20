@@ -7,12 +7,6 @@ import static io.restassured.http.ContentType.JSON;
 import static org.hamcrest.Matchers.*;
 
 public class LoginTests {
-    /*
-    1. Make request (POST) to https://reqres.in/api/login
-        with body { "email": "eve.holt@reqres.in", "password": "cityslicka" }
-    2. Get response { "token": "QpwL5tke4Pnpja7X4" }
-    3. Check token is QpwL5tke4Pnpja7X4
-     */
 
 
     @Test
@@ -68,6 +62,38 @@ public class LoginTests {
                 .log().body()
                 .statusCode(201)
                 .body("id", notNullValue());
+    }
+
+    @Test
+    void negativeUserNotFoundTest() {
+
+        given()
+                .log().uri()
+                .log().method()
+                .log().body()
+                .contentType(JSON)
+                .when()
+                .get("https://reqres.in/api/unknown/23")
+                .then()
+                .log().status()
+                .log().body()
+                .statusCode(404);
+    }
+
+    @Test
+    void successfulDeleteOfUser204() {
+
+        given()
+                .log().uri()
+                .log().method()
+                .log().body()
+                .contentType(JSON)
+                .when()
+                .delete("https://reqres.in/api/users/2")
+                .then()
+                .log().status()
+                .log().body()
+                .statusCode(204);
     }
 
 }
