@@ -4,8 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import static io.restassured.RestAssured.given;
 import static io.restassured.http.ContentType.JSON;
-import static org.hamcrest.Matchers.hasKey;
-import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.*;
 
 public class LoginTests {
     /*
@@ -30,7 +29,7 @@ public class LoginTests {
                 .log().status()
                 .log().body()
                 .statusCode(200)
-                .body("data", hasKey("id"));
+                .body("data.id", everyItem(notNullValue()));
     }
 
     @Test
@@ -48,8 +47,8 @@ public class LoginTests {
                 .then()
                 .log().status()
                 .log().body()
-                .statusCode(400)
-                .body("error", hasKey("token"));
+                .statusCode(200)
+                .body("token", notNullValue());
     }
 
     @Test
@@ -68,7 +67,7 @@ public class LoginTests {
                 .log().status()
                 .log().body()
                 .statusCode(201)
-                .body("name", hasKey("morpheus"));
+                .body("id", notNullValue());
     }
 
 }
