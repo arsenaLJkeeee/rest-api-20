@@ -17,7 +17,7 @@ public class LoginTests {
 
 
     @Test
-    void successfulLoginTest() {
+    void successfulGetListOfUsers() {
 
         given()
                 .log().uri()
@@ -34,7 +34,7 @@ public class LoginTests {
     }
 
     @Test
-    void missingPasswordTest() {
+    void successfulGetTokenAfterRegistration() {
         String authData = "{ \"email\": \"eve.holt@reqres.in\", \"password\": \"pistol\" }"; // BAD PRACTICE
 
         given()
@@ -50,6 +50,25 @@ public class LoginTests {
                 .log().body()
                 .statusCode(400)
                 .body("error", hasKey("token"));
+    }
+
+    @Test
+    void successfulCreatingOfUser() {
+        String authData = "{ \"name\": \"morpheus\", \"job\": \"leader\" }"; // BAD PRACTICE
+
+        given()
+                .log().uri()
+                .log().method()
+                .log().body()
+                .contentType(JSON)
+                .body(authData)
+                .when()
+                .post("https://reqres.in/api/users")
+                .then()
+                .log().status()
+                .log().body()
+                .statusCode(400)
+                .body("name", hasKey("morpheus"));
     }
 
 }
