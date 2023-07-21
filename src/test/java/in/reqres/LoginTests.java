@@ -67,7 +67,7 @@ public class LoginTests {
                 .then()
                 .log().status()
                 .log().body()
-                .statusCode(400)
+                .statusCode(201)
                 .body("name", hasKey("morpheus"));
     }
 
