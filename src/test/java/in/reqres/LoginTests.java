@@ -6,7 +6,8 @@ import static io.restassured.RestAssured.given;
 import static io.restassured.http.ContentType.JSON;
 import static org.hamcrest.Matchers.*;
 
-public class LoginTests {
+
+public class LoginTests extends TestBase {
 
     @Test
     void successfulGetListOfUsers() {
@@ -17,7 +18,7 @@ public class LoginTests {
                 .log().body()
                 .contentType(JSON)
                 .when()
-                .get("https://reqres.in/api/users?page=2")
+                .get("/users?page=2")
                 .then()
                 .log().status()
                 .log().body()
@@ -36,7 +37,7 @@ public class LoginTests {
                 .contentType(JSON)
                 .body(authData)
                 .when()
-                .post("https://reqres.in/api/register")
+                .post("/register")
                 .then()
                 .log().status()
                 .log().body()
@@ -55,7 +56,7 @@ public class LoginTests {
                 .contentType(JSON)
                 .body(authData)
                 .when()
-                .post("https://reqres.in/api/users")
+                .post("/users")
                 .then()
                 .log().status()
                 .log().body()
@@ -72,7 +73,7 @@ public class LoginTests {
                 .log().body()
                 .contentType(JSON)
                 .when()
-                .get("https://reqres.in/api/unknown/23")
+                .get("/unknown/23")
                 .then()
                 .log().status()
                 .log().body()
@@ -88,7 +89,7 @@ public class LoginTests {
                 .log().body()
                 .contentType(JSON)
                 .when()
-                .delete("https://reqres.in/api/users/2")
+                .delete("/users/2")
                 .then()
                 .log().status()
                 .log().body()
