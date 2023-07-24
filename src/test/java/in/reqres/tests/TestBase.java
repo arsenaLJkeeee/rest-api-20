@@ -1,4 +1,4 @@
-package in.reqres;
+package in.reqres.tests;
 
 import org.junit.jupiter.api.BeforeAll;
 

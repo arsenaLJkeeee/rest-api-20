@@ -1,13 +1,14 @@
-package in.reqres;
+package in.reqres.tests;
 
 import org.junit.jupiter.api.Test;
 
 import static io.restassured.RestAssured.given;
 import static io.restassured.http.ContentType.JSON;
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.everyItem;
+import static org.hamcrest.Matchers.notNullValue;
 
 
-public class LoginTests extends TestBase {
+public class LoginExtendedTests extends TestBase {
 
     @Test
     void successfulGetListOfUsers() {
