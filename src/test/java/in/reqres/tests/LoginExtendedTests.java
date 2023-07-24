@@ -37,7 +37,8 @@ public class LoginExtendedTests extends TestBase {
                 .post("/register")
                 .then()
                 .spec(LoginSpec.getResponseSpecification())
-                .body("token", notNullValue());
+                .body("token", notNullValue())
+                .body(matchesJsonSchemaInClasspath("schemas/get-token-after-registration-schema.json"));
     }
 
     @Test
