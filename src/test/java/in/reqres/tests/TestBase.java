@@ -2,8 +2,8 @@ package in.reqres.tests;
 
 import org.junit.jupiter.api.BeforeAll;
 
-import static io.restassured.RestAssured.basePath;
 import static io.restassured.RestAssured.baseURI;
+import static io.restassured.RestAssured.basePath;
 
 public class TestBase {
 
